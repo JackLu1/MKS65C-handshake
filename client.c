@@ -14,6 +14,11 @@ int main() {
     signal(SIGINT, sighandler);
     char * buffer = calloc(1,100);
     from_server = client_handshake( &to_server );
+    if (from_server < 0){
+        printf("%i\n", errno);
+        printf("server offline\n");
+        exit(0);
+    }
 
     while(1){
         printf("\n\n");
