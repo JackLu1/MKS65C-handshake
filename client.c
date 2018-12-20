@@ -5,7 +5,6 @@ int from_server;
 
 void sighandler(int sig){
     remove("private");
-    close(to_server);
     printf("Client has disconnected\n");
     exit(0);
 }
