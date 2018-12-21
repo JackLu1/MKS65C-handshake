@@ -2,6 +2,7 @@
 
 int to_client;
 int from_client;
+int main();
 
 void sighandler(int sig){
     if (sig == SIGINT){
@@ -9,9 +10,11 @@ void sighandler(int sig){
         printf("Server has disconnected\n");
         exit(0);
     } else if (sig == SIGPIPE){
-        remove("public");
+        close(from_client);
+        close(to_client);
+        printf("from %i\n", from_client);
         printf("client has disconnected\n");
-        exit(0);
+        main();
     }
 }
 
@@ -25,6 +28,7 @@ int main() {
 
     while(1){
         printf("\n\n");
+        printf("from %i to %i\n", from_client, to_client);
         printf("Awaiting client...\n");
         memset(buffer, 0, 100);
         read(from_client, buffer, 100);
