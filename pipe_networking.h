@@ -8,6 +8,7 @@
 #include <ctype.h>
 #include <errno.h>
 #include <signal.h>
+#include <sys/wait.h>
 
 #ifndef NETWORKING_H
 #define NETWORKING_H

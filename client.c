@@ -4,14 +4,22 @@ int to_server;
 int from_server;
 
 void sighandler(int sig){
-    remove("private");
-    printf("Client has disconnected\n");
-    exit(0);
+    if (sig == SIGINT){
+        remove("private");
+        printf("Client has disconnected\n");
+        exit(0);
+    } else if (sig == SIGPIPE){
+        close(to_server);
+        close(from_server);
+        printf("server has disconnected\n");
+        exit(0);
+    }
 }
 
 int main() {
 
     signal(SIGINT, sighandler);
+    signal(SIGPIPE, sighandler);
     char * buffer = calloc(1,100);
     from_server = client_handshake( &to_server );
     if (from_server < 0){
